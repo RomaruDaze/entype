@@ -6,30 +6,27 @@ const HomePage: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-4xl font-bold mb-8">Entype</h1>
-      <div className="flex flex-col space-y-4 ">
+      <div className="flex flex-col space-y-4">
         <button
-          className="px-20 py-5 bg-blue-500 text-white rounded text-2xl font-bold"
+          className="px-20 py-5 bg-blue-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
           onClick={() => {
-            console.log("Start");
-            navigate("/GamePage");
+            navigate("/game");
           }}
         >
           Start
         </button>
         <button
-          className="px-20 py-5 bg-gray-500 text-white rounded text-2xl font-bold"
+          className="px-20 py-5 bg-red-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
           onClick={() => {
-            console.log("Leaderboards");
-            navigate("/LDPage");
+            navigate("/leaderboards");
           }}
         >
           Leaderboards
         </button>
         <button
-          className="px-20 py-5 bg-red-500 text-white rounded text-2xl font-bold"
+          className="px-20 py-5 bg-gray-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
           onClick={() => {
-            console.log("Exit");
-            navigate("/SettingPage");
+            navigate("/settings");
           }}
         >
           Settings
