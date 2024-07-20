@@ -1,25 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-
-const words = [
-  "apple",
-  "banana",
-  "cherry",
-  "date",
-  "elderberry",
-  "fig",
-  "grape",
-];
+import { useNavigate } from "react-router-dom";
 
 const EngGame: React.FC = () => {
+  const [words, setWords] = useState<string[]>([]);
   const [currentWord, setCurrentWord] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(120);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentWord(words[Math.floor(Math.random() * words.length)]);
-    inputRef.current?.focus();
+    fetch("https://sheetdb.io/api/v1/cblskp1ofk60f")
+      .then((response) => response.json())
+      .then((data) => {
+        const wordList = data.map((item: any) => item.word);
+        setWords(wordList);
+        setCurrentWord(wordList[Math.floor(Math.random() * wordList.length)]);
+      });
   }, []);
 
   useEffect(() => {
@@ -29,36 +27,60 @@ const EngGame: React.FC = () => {
       }, 1000);
       return () => clearInterval(timer);
     } else {
-      alert(`Time's up! Your score is ${score}`);
+      navigate("/score", { state: { score } });
     }
-  }, [timeLeft]);
+  }, [timeLeft, navigate, score]);
+
+  useEffect(() => {
+    inputRef.current?.focus(); 
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     if (e.target.value === currentWord) {
-      setScore(score + 1);
+      setScore(score + currentWord.length);
       setCurrentWord(words[Math.floor(Math.random() * words.length)]);
       setInputValue("");
     }
   };
 
+  const renderWord = () => {
+    return currentWord.split("").map((char, index) => {
+      let color = "white";
+      if (index < inputValue.length) {
+        color = char === inputValue[index] ? "green" : "red";
+      }
+      return (
+        <span key={index} style={{ color }}>
+          {char}
+        </span>
+      );
+    });
+  };
+
   return (
     <>
-      {" "}
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <h1 className="text-4xl font-bold mb-8">Entype 英語モード</h1>
-        <div className="flex flex-col items-center justify-center border-2 border-[#000] rounded-lg p-5 px-[10%]">
+      <div
+        className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
+        onClick={() => inputRef.current?.focus()} 
+      >
+        <h1 className="text-4xl font-bold mb-8">Entype English Mode</h1>
+        <div className="flex flex-col items-center justify-center border-2 border-[#000] rounded-lg p-5 px-[10%] w-[calc(50%)]">
           <p className="text-4xl mb-[20%] mt-[10%] bg-black text-white rounded-lg p-4">
-            {currentWord}
+            {renderWord()}
           </p>
+          <p className="text-2xl">{timeLeft}s</p>
+          <div
+            className="bg-green-500 rounded-lg text-center h-4 mt-4"
+            style={{ width: `${(timeLeft / 120) * 100}%` }}
+          ></div>
           <input
             ref={inputRef}
-            className="text-4xl mb-[25%] px-[20%] py-[3%] text-center rounded-lg"
+            className="position-absolute"
             value={inputValue}
             onChange={handleChange}
+            style={{ opacity: 0 }}
           />
-          <p className="">Time : {timeLeft}s</p>
-          <p className="">Score : {score}pt</p>
         </div>
       </div>
     </>

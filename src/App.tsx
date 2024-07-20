@@ -6,6 +6,7 @@ import LDPage from "./components/Leaderboard";
 import SettingPage from "./components/Settings";
 import EngGame from "./components/game/eng";
 import DevGame from "./components/game/dev";
+import ScorePage from "./components/Score";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Route path="/game" element={<GamePage />} />
         <Route path="/leaderboards" element={<LDPage />} />
         <Route path="/settings" element={<SettingPage />} />
+        <Route path="/score" element={<ScorePage />} />
         <Route path="/game/eng" element={<EngGame />} />
         <Route path="/game/dev" element={<DevGame />} />
       </Routes>
