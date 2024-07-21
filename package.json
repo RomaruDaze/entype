@@ -11,7 +11,7 @@
     "build:css": "tailwindcss build src/index.css -o dist/output.css",
     "preview": "vite preview",
     "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "deploy" : "gh-pages -d dist -r https://github.com/RomaruDaze/entype.git"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
