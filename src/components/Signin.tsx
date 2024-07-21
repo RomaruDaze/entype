@@ -1,6 +1,7 @@
 import { useState } from "react";
 import showIcon from "../assets/e-open.png";
 import hideIcon from "../assets/e-close.png";
+import React from "react";
 
 const SignInPage = ({ onLogin }: { onLogin: (username: string) => void }) => {
   const [showPassword, setShowPassword] = useState(false);
