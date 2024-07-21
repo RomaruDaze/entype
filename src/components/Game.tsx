@@ -13,27 +13,35 @@ const GamePage: React.FC = () => {
   const [showCardDev, setShowCardDev] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-8">Game Mode</h1>
-      <div className="flex flex-row space-x-4">
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center justify-center px-20 py-10">
         <button
-          className="px-20 py-5 bg-blue-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
-          onClick={() => {
-            console.log("English");
-            setShowCardEng(true);
-          }}
+          className="absolute top-[20%] left-[20%] px-4 py-2 bg-gray-500 text-white rounded text-xl font-bold transform transition-transform duration-300 hover:scale-105"
+          onClick={() => navigate(-1)}
         >
-          English
+          Back
         </button>
-        <button
-          className="px-20 py-5 bg-green-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
-          onClick={() => {
-            console.log("Developers");
-            setShowCardDev(true);
-          }}
-        >
-          Coding
-        </button>
+        <h1 className="text-7xl font-bold mb-[10%]">Game Mode</h1>
+        <div className="flex flex-row space-x-4">
+          <button
+            className="px-20 py-5 bg-blue-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
+            onClick={() => {
+              console.log("English");
+              setShowCardEng(true);
+            }}
+          >
+            English
+          </button>
+          <button
+            className="px-20 py-5 bg-green-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
+            onClick={() => {
+              console.log("Developers");
+              setShowCardDev(true);
+            }}
+          >
+            Coding
+          </button>
+        </div>
       </div>
       {showCardEng && (
         <>
@@ -72,7 +80,9 @@ const GamePage: React.FC = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-20 w-[30%] rounded shadow-lg grid grid-cols-2 gap-4 z-20">
             <button
               className="text-2xl font-bold px-4 py-2 bg-green-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/dev", { state: { language: "python" } })}
+              onClick={() =>
+                navigate("/game/dev", { state: { language: "python" } })
+              }
             >
               <div className="flex flex-row items-center justify-center">
                 <img src={pythonLogo} alt="Python" className="w-10 h-10" />
@@ -81,7 +91,9 @@ const GamePage: React.FC = () => {
             </button>
             <button
               className="text-2xl font-bold px-4 py-2 bg-yellow-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/dev", { state: { language: "java" } })}
+              onClick={() =>
+                navigate("/game/dev", { state: { language: "java" } })
+              }
             >
               <div className="flex flex-row items-center justify-center">
                 <img src={javaLogo} alt="Java" className="w-10 h-10" />
@@ -90,7 +102,9 @@ const GamePage: React.FC = () => {
             </button>
             <button
               className="text-2xl font-bold px-4 py-2 bg-purple-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/dev", { state: { language: "c" } })}
+              onClick={() =>
+                navigate("/game/dev", { state: { language: "c" } })
+              }
             >
               <div className="flex flex-row items-center justify-center">
                 <img src={cLogo} alt="C" className="w-10 h-10" />
@@ -99,7 +113,9 @@ const GamePage: React.FC = () => {
             </button>
             <button
               className="text-2xl font-bold px-4 py-2 bg-[#fef5df] text-blue-500 rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/dev", { state: { language: "golang" } })}
+              onClick={() =>
+                navigate("/game/dev", { state: { language: "golang" } })
+              }
             >
               <div className="flex flex-row items-center justify-center">
                 <img src={golangLogo} alt="Golang" className="w-10 h-10" />
@@ -108,7 +124,9 @@ const GamePage: React.FC = () => {
             </button>
             <button
               className="text-2xl font-bold px-4 py-2 bg-gray-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/dev", { state: { language: "typescript" } })}
+              onClick={() =>
+                navigate("/game/dev", { state: { language: "typescript" } })
+              }
             >
               <div className="flex flex-row items-center justify-center">
                 <img
@@ -121,7 +139,9 @@ const GamePage: React.FC = () => {
             </button>
             <button
               className="text-2xl font-bold px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/dev", { state: { language: "rust" } })}
+              onClick={() =>
+                navigate("/game/dev", { state: { language: "rust" } })
+              }
             >
               <div className="flex flex-row items-center justify-center">
                 <img src={rustLogo} alt="Rust" className="w-10 h-10" />

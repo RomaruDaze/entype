@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ScorePage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { score, typos } = location.state || { score: 0, typos: 0 };
+  const loggedInUser = localStorage.getItem("loggedInUser");
+
+  useEffect(() => {
+    if (loggedInUser) {
+      fetch(
+        `https://sheetdb.io/api/v1/cblskp1ofk60f?sheet=score&id=${loggedInUser}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const existingScore = data[0]?.wpm || 0;
+          if (score > existingScore) {
+            fetch(`https://sheetdb.io/api/v1/cblskp1ofk60f?sheet=score`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: loggedInUser,
+                wpm: score,
+                acc: ((score - typos) / score) * 100,
+              }),
+            });
+          }
+        });
+    }
+  }, [score, typos, loggedInUser]);
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
