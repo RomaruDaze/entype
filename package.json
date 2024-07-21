@@ -8,10 +8,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "build:css": "tailwindcss build src/index.css -o dist/output.css",
+    "build:css": "postcss src/styles/tailwind.css -o dist/output.css",
     "preview": "vite preview",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist -r https://github.com/RomaruDaze/entype.git"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
