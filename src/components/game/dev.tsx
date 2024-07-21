@@ -15,7 +15,7 @@ const DevGame: React.FC = () => {
 
   useEffect(() => {
     const language = location.state?.language || "python";
-    fetch("https://sheetdb.io/api/v1/cblskp1ofk60f?sheet=words")
+    fetch(`${import.meta.env.VITE_SHEETDB_URL}?sheet=words`)
       .then((response) => response.json())
       .then((data) => {
         const wordList = data.map((item: any) => item[language]);

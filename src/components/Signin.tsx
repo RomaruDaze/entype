@@ -30,7 +30,7 @@ const SignInPage = ({ onLogin }: { onLogin: (username: string) => void }) => {
 
     try {
       const response = await fetch(
-        "https://sheetdb.io/api/v1/cblskp1ofk60f?sheet=player"
+        `${import.meta.env.VITE_SHEETDB_URL}?sheet=player`
       );
       const data = await response.json();
 
@@ -43,7 +43,7 @@ const SignInPage = ({ onLogin }: { onLogin: (username: string) => void }) => {
         setError("User ID or Username already exists");
       } else {
         const postResponse = await fetch(
-          "https://sheetdb.io/api/v1/cblskp1ofk60f?sheet=player",
+          `${import.meta.env.VITE_SHEETDB_URL}?sheet=player`,
           {
             method: "POST",
             headers: {

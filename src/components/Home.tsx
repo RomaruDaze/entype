@@ -28,7 +28,7 @@ const HomePage: React.FC = () => {
         <span className="text-green-500">En</span>Type
       </h1>
       {loggedInUser && (
-        <p className="text-4xl mb-4 text-bold">{loggedInUser} | Rank: 1</p>
+        <p className="text-4xl mb-4 text-bold">{loggedInUser}</p>
       )}
       <div className="flex flex-col items-center justify-center px-20 py-10 rounded-lg">
         <div className="flex flex-col space-y-4">
@@ -43,7 +43,7 @@ const HomePage: React.FC = () => {
           <button
             className="px-20 py-5 bg-red-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
             onClick={() => {
-              navigate("/leaderboards");
+              navigate("/leaderboards", { state: { loggedInUser } });
             }}
           >
             Leaderboards
