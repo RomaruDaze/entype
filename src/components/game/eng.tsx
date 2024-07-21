@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const EngGame: React.FC = () => {
+  const location = useLocation();
+  const initialTime = location.state?.time || 120; 
   const [words, setWords] = useState<string[]>([]);
   const [currentWord, setCurrentWord] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [typos, setTypos] = useState(0); 
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -27,28 +30,34 @@ const EngGame: React.FC = () => {
       }, 1000);
       return () => clearInterval(timer);
     } else {
-      navigate("/score", { state: { score } });
+      navigate("/score", { state: { score, typos } }); 
     }
-  }, [timeLeft, navigate, score]);
+  }, [timeLeft, navigate, score, typos]);
 
   useEffect(() => {
-    inputRef.current?.focus(); 
+    inputRef.current?.focus();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    if (e.target.value === currentWord) {
+    const value = e.target.value;
+    setInputValue(value);
+    if (value === currentWord) {
       setScore(score + currentWord.length);
       setCurrentWord(words[Math.floor(Math.random() * words.length)]);
       setInputValue("");
+    } else {
+      const typoCount = value.split("").reduce((acc, char, index) => {
+        return acc + (char !== currentWord[index] ? 1 : 0);
+      }, 0);
+      setTypos(typos + typoCount);
     }
   };
 
   const renderWord = () => {
     return currentWord.split("").map((char, index) => {
-      let color = "white";
+      let color = "grey";
       if (index < inputValue.length) {
-        color = char === inputValue[index] ? "green" : "red";
+        color = char === inputValue[index] ? "#39FF14" : "red";
       }
       return (
         <span key={index} style={{ color }}>
@@ -62,25 +71,24 @@ const EngGame: React.FC = () => {
     <>
       <div
         className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
-        onClick={() => inputRef.current?.focus()} 
+        onClick={() => inputRef.current?.focus()}
       >
         <h1 className="text-4xl font-bold mb-8">Entype English Mode</h1>
         <div className="flex flex-col items-center justify-center border-2 border-[#000] rounded-lg p-5 px-[10%] w-[calc(50%)]">
-          <p className="text-4xl mb-[20%] mt-[10%] bg-black text-white rounded-lg p-4">
+          <p className="text-4xl mb-[20%] mt-[10%] bg-black rounded-lg p-4">
             {renderWord()}
           </p>
+          <input
+            ref={inputRef}
+            className="text-4xl mb-[15%] py-[3%] text-center rounded-lg w-[calc(150%)]"
+            value={inputValue}
+            onChange={handleChange}
+          />
           <p className="text-2xl">{timeLeft}s</p>
           <div
             className="bg-green-500 rounded-lg text-center h-4 mt-4"
-            style={{ width: `${(timeLeft / 120) * 100}%` }}
+            style={{ width: `${(timeLeft / initialTime) * 100}%` }}
           ></div>
-          <input
-            ref={inputRef}
-            className="position-absolute"
-            value={inputValue}
-            onChange={handleChange}
-            style={{ opacity: 0 }}
-          />
         </div>
       </div>
     </>
