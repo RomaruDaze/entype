@@ -39,13 +39,13 @@ const ScorePage: React.FC = () => {
       <div className="flex flex-col justify-center gap-4">
         <button
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-          onClick={() => navigate("/game")}
+          onClick={() => navigate("/entype/game")}
         >
           Play Again
         </button>
         <button
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/entype/")}
         >
           Main Menu
         </button>

@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
           <button
             className="px-20 py-5 bg-blue-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
             onClick={() => {
-              navigate("/game");
+              navigate("/entype/game");
             }}
           >
             Start
@@ -43,7 +43,7 @@ const HomePage: React.FC = () => {
           <button
             className="px-20 py-5 bg-red-500 text-white rounded text-2xl font-bold transform transition-transform duration-300 hover:scale-105"
             onClick={() => {
-              navigate("/leaderboards", { state: { loggedInUser } });
+              navigate("/entype/leaderboards", { state: { loggedInUser } });
             }}
           >
             Leaderboards

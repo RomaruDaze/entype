@@ -52,19 +52,25 @@ const GamePage: React.FC = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-20 w-[30%] rounded shadow-lg grid grid-cols-1 gap-4 z-20">
             <button
               className="text-2xl font-bold px-4 py-2 bg-green-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/eng", { state: { time: 60 } })}
+              onClick={() =>
+                navigate("/entype/game/eng", { state: { time: 60 } })
+              }
             >
               Easy
             </button>
             <button
               className="text-2xl font-bold px-4 py-2 bg-yellow-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/eng", { state: { time: 90 } })}
+              onClick={() =>
+                navigate("/entype/game/eng", { state: { time: 90 } })
+              }
             >
               Medium
             </button>
             <button
               className="text-2xl font-bold px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate("/game/eng", { state: { time: 120 } })}
+              onClick={() =>
+                navigate("/entype/game/eng", { state: { time: 120 } })
+              }
             >
               Hard
             </button>
@@ -81,7 +87,7 @@ const GamePage: React.FC = () => {
             <button
               className="text-2xl font-bold px-4 py-2 bg-green-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
               onClick={() =>
-                navigate("/game/dev", { state: { language: "python" } })
+                navigate("/entype/game/dev", { state: { language: "python" } })
               }
             >
               <div className="flex flex-row items-center justify-center">
@@ -92,7 +98,7 @@ const GamePage: React.FC = () => {
             <button
               className="text-2xl font-bold px-4 py-2 bg-yellow-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
               onClick={() =>
-                navigate("/game/dev", { state: { language: "java" } })
+                navigate("/entype/game/dev", { state: { language: "java" } })
               }
             >
               <div className="flex flex-row items-center justify-center">
@@ -103,7 +109,7 @@ const GamePage: React.FC = () => {
             <button
               className="text-2xl font-bold px-4 py-2 bg-purple-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
               onClick={() =>
-                navigate("/game/dev", { state: { language: "c" } })
+                navigate("/entype/game/dev", { state: { language: "c" } })
               }
             >
               <div className="flex flex-row items-center justify-center">
@@ -114,7 +120,7 @@ const GamePage: React.FC = () => {
             <button
               className="text-2xl font-bold px-4 py-2 bg-[#fef5df] text-blue-500 rounded transform transition-transform duration-300 hover:scale-105"
               onClick={() =>
-                navigate("/game/dev", { state: { language: "golang" } })
+                navigate("/entype/game/dev", { state: { language: "golang" } })
               }
             >
               <div className="flex flex-row items-center justify-center">
@@ -125,7 +131,9 @@ const GamePage: React.FC = () => {
             <button
               className="text-2xl font-bold px-4 py-2 bg-gray-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
               onClick={() =>
-                navigate("/game/dev", { state: { language: "typescript" } })
+                navigate("/entype/game/dev", {
+                  state: { language: "typescript" },
+                })
               }
             >
               <div className="flex flex-row items-center justify-center">
@@ -140,7 +148,7 @@ const GamePage: React.FC = () => {
             <button
               className="text-2xl font-bold px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:scale-105"
               onClick={() =>
-                navigate("/game/dev", { state: { language: "rust" } })
+                navigate("/entype/game/dev", { state: { language: "rust" } })
               }
             >
               <div className="flex flex-row items-center justify-center">
