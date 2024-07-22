@@ -12,13 +12,16 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/game" element={<GamePage />} />
-        <Route path="/leaderboards" element={<LDPage />} />
-        <Route path="/score" element={<ScorePage />} />
-        <Route path="/game/eng" element={<EngGame />} />
-        <Route path="/game/dev" element={<DevGame />} />
-        <Route path="/signin" element={<SignInPage onLogin={() => {}} />} />
+        <Route path="/entype/" element={<HomePage />} />
+        <Route path="/entype/game" element={<GamePage />} />
+        <Route path="/entype/leaderboards" element={<LDPage />} />
+        <Route path="/entype/score" element={<ScorePage />} />
+        <Route path="/entype/game/eng" element={<EngGame />} />
+        <Route path="/entype/game/dev" element={<DevGame />} />
+        <Route
+          path="/entype/signin"
+          element={<SignInPage onLogin={() => {}} />}
+        />
       </Routes>
     </Router>
   );
