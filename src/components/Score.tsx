@@ -60,7 +60,7 @@ const ScorePage: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <h1 className="text-4xl font-bold py-4">LPS: {lps}</h1>
+      <h1 className="text-4xl font-bold py-4">LPS: {lps.toFixed(2)}</h1>
       <p className="text-4xl font-bold py-4">Accuracy: {acc.toFixed(2)} %</p>
       <div className="flex flex-col justify-center gap-4">
         <button
