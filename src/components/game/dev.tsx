@@ -6,12 +6,13 @@ const DevGame: React.FC = () => {
   const [currentWord, setCurrentWord] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(120);
   const [typos, setTypos] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const initialTime = location.state?.time || 90; // Default to 90 seconds if not provided
+  const [timeLeft, setTimeLeft] = useState(initialTime);
 
   useEffect(() => {
     const language = location.state?.language || "python";
@@ -28,13 +29,13 @@ const DevGame: React.FC = () => {
   useEffect(() => {
     if (gameStarted && timeLeft > 0) {
       const timer = setInterval(() => {
-        setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+        setTimeLeft((prevTimeLeft: number) => prevTimeLeft - 1);
       }, 1000);
       return () => clearInterval(timer);
     } else if (timeLeft === 0) {
-      navigate("/score", { state: { score, typos } });
+      navigate("/entype/score", { state: { score, typos, timer: initialTime } });
     }
-  }, [timeLeft, gameStarted, navigate, score, typos]);
+  }, [timeLeft, gameStarted, navigate, score, typos, initialTime]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -116,7 +117,7 @@ const DevGame: React.FC = () => {
           <p className="text-2xl">{timeLeft}s</p>
           <div
             className="bg-green-500 rounded-lg text-center h-4 mt-4"
-            style={{ width: `${(timeLeft / 120) * 100}%` }}
+            style={{ width: `${(timeLeft / initialTime) * 100}%` }}
           ></div>
         </div>
       </div>

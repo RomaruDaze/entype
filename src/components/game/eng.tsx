@@ -30,9 +30,9 @@ const EngGame: React.FC = () => {
       }, 1000);
       return () => clearInterval(timer);
     } else {
-      navigate("/score", { state: { score, typos } });
+      navigate("/entype/score", { state: { score, typos, timer: initialTime } });
     }
-  }, [timeLeft, navigate, score, typos]);
+  }, [timeLeft, navigate, score, typos, initialTime]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
