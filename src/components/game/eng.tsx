@@ -30,6 +30,7 @@ const EngGame: React.FC = () => {
       }, 1000);
       return () => clearInterval(timer);
     } else {
+      console.log("Game Over");
       navigate("/entype/score", { state: { score, typos, timer: initialTime } });
     }
   }, [timeLeft, navigate, score, typos, initialTime]);
