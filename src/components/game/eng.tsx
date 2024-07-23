@@ -33,7 +33,7 @@ const EngGame: React.FC = () => {
       console.log("Game Over");
       navigate("/entype/score", { state: { score, typos, timer: initialTime } });
     }
-  }, [timeLeft, navigate, score, typos, initialTime]);
+  }, [timeLeft, gameStarted, navigate, score, typos, initialTime]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
