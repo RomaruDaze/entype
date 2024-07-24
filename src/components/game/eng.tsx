@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import loadingGif from "../../assets/loadingcat.gif";
 
 const EngGame: React.FC = () => {
   const location = useLocation();
@@ -11,8 +12,10 @@ const EngGame: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [gameStarted, setGameStarted] = useState(false);
   const [typos, setTypos] = useState(0);
+  const [loading, setLoading] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_SHEETDB_URL}?sheet=words`)
       .then((response) => response.json())
@@ -20,20 +23,9 @@ const EngGame: React.FC = () => {
         const wordList = data.map((item: any) => item.word);
         setWords(wordList);
         setCurrentWord(wordList[Math.floor(Math.random() * wordList.length)]);
+        setLoading(false);
       });
   }, []);
-
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
-      return () => clearInterval(timer);
-    } else {
-      console.log("Game Over");
-      navigate("/entype/score", { state: { score, typos, timer: initialTime } });
-    }
-  }, [timeLeft, gameStarted, navigate, score, typos, initialTime]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,11 +34,29 @@ const EngGame: React.FC = () => {
         setTimeout(() => {
           inputRef.current?.focus();
         }, 0);
+
+        const timer = setInterval(() => {
+          setTimeLeft((prevTimeLeft: number) => {
+            if (prevTimeLeft <= 1) {
+              clearInterval(timer);
+              return 0;
+            }
+            return prevTimeLeft - 1;
+          });
+        }, 1000);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [gameStarted]);
+
+  useEffect(() => {
+    if (timeLeft === 0 && gameStarted) {
+      navigate("/entype/score", {
+        state: { score, typos, timer: initialTime },
+      });
+    }
+  }, [timeLeft, gameStarted, navigate, score, typos, initialTime]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -79,45 +89,58 @@ const EngGame: React.FC = () => {
 
   return (
     <>
-      {!gameStarted && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-80 flex items-center justify-center z-50">
-          <p className="text-white text-4xl">
-            Press{" "}
-            <span className="text-green-500 border-2 border-green-500 rounded-lg px-3 py-1">
-              Space
-            </span>{" "}
-            to Start
-          </p>
-        </div>
-      )}
-      <div
-        className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
-        onClick={() => inputRef.current?.focus()}
-      >
-        <h1 className="text-6xl font-bold mb-8">Entype English Mode</h1>
-        <div className="flex flex-col items-center justify-center p-5 px-[10%] w-[calc(50%)]">
-          <button
-            className="absolute top-[20%] left-[20%]  px-4 py-2 bg-gray-500 text-white rounded text-xl font-bold transform transition-transform duration-300 hover:scale-105"
-            onClick={() => navigate(-1)}
-          >
-            Back
-          </button>
-          <p className="text-4xl mb-[20%] mt-[10%] bg-black rounded-lg p-4">
-            {renderWord()}
-          </p>
-          <input
-            ref={inputRef}
-            className="text-4xl mb-[15%] py-[3%] text-center rounded-lg w-[calc(150%)]"
-            value={inputValue}
-            onChange={handleChange}
+      {loading ? (
+        <div className="flex flex-col fixed inset-0  flex items-center justify-center z-50">
+          <img
+            src={loadingGif}
+            alt="Loading..."
+            style={{ width: "auto", height: "200px" }}
           />
-          <p className="text-2xl">{timeLeft}s</p>
-          <div
-            className="bg-green-500 rounded-lg text-center h-4 mt-4"
-            style={{ width: `${(timeLeft / initialTime) * 100}%` }}
-          ></div>
+          <p className="text-4xl">Loading...</p>
         </div>
-      </div>
+      ) : (
+        <>
+          {!gameStarted && (
+            <div className="fixed inset-0 bg-gray-800 bg-opacity-80 flex items-center justify-center z-50">
+              <p className="text-white text-4xl">
+                Press{" "}
+                <span className="text-green-500 border-2 border-green-500 rounded-lg px-3 py-1">
+                  Space
+                </span>{" "}
+                to Start
+              </p>
+            </div>
+          )}
+          <div
+            className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
+            onClick={() => inputRef.current?.focus()}
+          >
+            <h1 className="text-6xl font-bold mb-8">Entype English Mode</h1>
+            <div className="flex flex-col items-center justify-center p-5 px-[10%] w-[calc(50%)]">
+              <button
+                className="absolute top-[20%] left-[20%]  px-4 py-2 bg-gray-500 text-white rounded text-xl font-bold transform transition-transform duration-300 hover:scale-105"
+                onClick={() => navigate(-1)}
+              >
+                Back
+              </button>
+              <p className="text-4xl mb-[20%] mt-[10%] bg-black rounded-lg p-4">
+                {renderWord()}
+              </p>
+              <input
+                ref={inputRef}
+                className="text-4xl mb-[15%] py-[3%] text-center rounded-lg w-[calc(150%)]"
+                value={inputValue}
+                onChange={handleChange}
+              />
+              <p className="text-2xl">{timeLeft}s</p>
+              <div
+                className="bg-green-500 rounded-lg text-center h-4 mt-4"
+                style={{ width: `${(timeLeft / initialTime) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

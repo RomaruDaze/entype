@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/entype-logo.png";
 import Modal from "./Modal/Modal";
 import SignInPage from "./Signin";
+import catgif from "../assets/catgif.gif";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,13 +17,40 @@ const HomePage: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const cat = document.querySelector(".cat-walk") as HTMLElement;
+    let position = window.innerWidth - cat.offsetWidth; // Start from the right
+    let currentDirection: "left" | "right" = "left"; // Initial direction is left
+    const speed = 10;
+
+    const moveCat = () => {
+      if (currentDirection === "right") {
+        position += speed;
+        if (position >= window.innerWidth - cat.offsetWidth) {
+          currentDirection = "left";
+        }
+      } else {
+        position -= speed;
+        if (position <= 0) {
+          currentDirection = "right";
+        }
+      }
+      cat.style.transform = `translateX(${position}px) scaleX(${
+        currentDirection === "right" ? 1 : -1
+      })`;
+      requestAnimationFrame(moveCat);
+    };
+
+    moveCat();
+  }, []);
+
   const handleLogout = () => {
     setLoggedInUser(null);
     localStorage.removeItem("loggedInUser");
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen relative">
       <h1 className="flex flex-row items-center justify-center text-7xl font-bold mb-8">
         <img src={logo} alt="Entype" className="w-20 h-20 mr-4" />
         <span className="text-green-500">En</span>Type
@@ -76,6 +104,9 @@ const HomePage: React.FC = () => {
           }}
         />
       </Modal>
+      <div className="cat-container">
+        <img src={catgif} alt="Loading..." className="cat-walk" />
+      </div>
     </div>
   );
 };

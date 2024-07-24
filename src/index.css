@@ -20,3 +20,63 @@
         transform: rotate(360deg);
     }
 }
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+.cat-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.cat-walk {
+    position: absolute;
+    bottom: 0;
+    transition: transform 0.1s linear;
+}
+
+@keyframes walk {
+    0% {
+        left: 0;
+        transform: scaleX(1);
+    }
+
+    50% {
+        left: calc(100% - 100px);
+        /* Adjust 100px to the width of your GIF */
+        transform: scaleX(1);
+    }
+
+    50.01% {
+        transform: scaleX(-1);
+    }
+
+    100% {
+        left: 0;
+        transform: scaleX(-1);
+    }
+}

@@ -27,7 +27,7 @@ const ScorePage: React.FC = () => {
           const response = await fetch(
             `https://sheetdb.io/api/v1/cblskp1ofk60f?sheet=score&id=${loggedInUser}`
           );
-        
+
           const data = await response.json();
           const existingScore = data[0]?.lps || 0;
           if (score > existingScore) {
