@@ -80,3 +80,11 @@
         transform: scaleX(-1);
     }
 }
+
+.duck-container {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    left: 60%;
+
+}

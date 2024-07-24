@@ -19,8 +19,8 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const cat = document.querySelector(".cat-walk") as HTMLElement;
-    let position = window.innerWidth - cat.offsetWidth; // Start from the right
-    let currentDirection: "left" | "right" = "left"; // Initial direction is left
+    let position = window.innerWidth - cat.offsetWidth;
+    let currentDirection: "left" | "right" = "left";
     const speed = 10;
 
     const moveCat = () => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import duck from "../assets/dancingduck.gif";
 
 const ScorePage: React.FC = () => {
   const navigate = useNavigate();
@@ -75,6 +76,9 @@ const ScorePage: React.FC = () => {
         >
           Main Menu
         </button>
+      </div>
+      <div className="duck-container">
+        <img src={duck} alt="Loading..." className="duck-walk" />
       </div>
     </div>
   );
